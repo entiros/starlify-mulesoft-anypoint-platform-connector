@@ -11,7 +11,7 @@ For exposure of connector etc. on http.
 
 ## Start
 First clone the project using below link
-https://github.com/entiros/starlify-mulesoft-anypointer-platform-connector.git
+https://github.com/entiros/starlify-mulesoft-anypoint-platform-connector.git
 
 ## Configuration
 Make sure proper MuleSoft api gateway and starlify url's configured properly in properties file like this
