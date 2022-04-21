@@ -1,4 +1,4 @@
-# Starlify connector for Mulesoft Anypoint Platform Gateway
+# Starlify connector for Mulesoft Anypoint Platform API Gateway
 Exports the Mulesoft Anypoint Platform API Gateway details to Starlify as systems and services.
 
 ## Dependencies
