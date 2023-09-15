@@ -3,7 +3,7 @@ package com.entiros.starlify.muleconnector.api.service.impl;
 import com.entiros.starlify.muleconnector.api.dto.Asset;
 import com.entiros.starlify.muleconnector.api.dto.AssetDetails;
 import com.entiros.starlify.muleconnector.api.dto.UserProfile;
-import com.entiros.starlify.muleconnector.api.service.MuleService;
+import com.entiros.starlify.muleconnector.api.service.ExchangeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MuleServiceImpl implements MuleService {
+public class ExchangeServiceImpl implements ExchangeService {
 
     private final RestTemplate restTemplate;
 

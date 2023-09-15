@@ -29,7 +29,7 @@ Go to cloned location and run the command below to start the process:
 mvn clean spring-boot:run
 ```
 
-## Import Mulesoft Anypoint Platform API Gateway details to Starlify
+## Import Mulesoft Anypoint Platform API Exchange details to Starlify
 Use the endpoint below to start importing API details to Starlify as systems and services.
 ```
 Method : POST
@@ -37,10 +37,25 @@ URL : http://localhost:8080/submitRequest
 Body : 
 	{
 		"starlifyKey":"starlify-api-key",
-		"apiKey":"mulesoft-api-key",
+		"apiKey":"mulesoft-api-key", 
 		"networkId":"starlify-network-id-to-create-services-systems-and-flows"
 	}
 ```
+
+## Import Mulesoft Cloudhub details to Starlify
+```
+Method : POST
+URL : http://localhost:8080/submitCloudhubRequest
+Body : 
+	{
+		"starlifyKey":"starlify-api-key",
+		"apiKey":"mulesoft-api-key",
+		"networkId":"starlify-network-id-to-create-services-systems-and-flows"
+		"enviroment":"cloudhub-enviroment" 
+	}
+```
+
+environment can be default to get users default environment if default is chosen in cloudhub
 
 ## Output
 After successful request submission, you should be able to see all the systems and services from Mulesoft Anypoint Platform in your Starlify network.

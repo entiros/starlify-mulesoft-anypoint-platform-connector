@@ -1,7 +1,7 @@
 package com.entiros.starlify.muleconnector.api.service.impl;
 
 import com.entiros.starlify.muleconnector.api.dto.*;
-import com.entiros.starlify.muleconnector.api.service.MuleService;
+import com.entiros.starlify.muleconnector.api.service.ExchangeService;
 import com.entiros.starlify.muleconnector.api.service.StarlifyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,16 +16,14 @@ import org.springframework.web.client.RestTemplate;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class StarlifyServiceImpl implements StarlifyService {
     private final RestTemplate restTemplate;
 
-    private final MuleService muleService;
+    private final ExchangeService exchangeService;
 
     @Value("${starlify.url}")
     private String starlifyServer;
@@ -83,7 +81,7 @@ public class StarlifyServiceImpl implements StarlifyService {
 
     @Override
     public String addServices(Request request, String systemId, Asset asset) {
-        String c = muleService.getRaml(request.getApiKey(), asset.getVersionGroup(), asset.getGroupId(), asset.getAssetId(), asset.getVersion());
+        String c = exchangeService.getRaml(request.getApiKey(), asset.getVersionGroup(), asset.getGroupId(), asset.getAssetId(), asset.getVersion());
         InputStream is = new ByteArrayInputStream(c.getBytes());
         LinkedMultiValueMap<String, Object> vm = new LinkedMultiValueMap<>();
         String fileName = asset.getAssetId() + ".raml";

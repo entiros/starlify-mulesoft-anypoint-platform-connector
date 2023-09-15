@@ -1,7 +1,8 @@
 package com.entiros.starlify.muleconnector.api.service.impl;
 
 import com.entiros.starlify.muleconnector.api.dto.*;
-import com.entiros.starlify.muleconnector.api.service.MuleService;
+import com.entiros.starlify.muleconnector.api.service.CloudhubService;
+import com.entiros.starlify.muleconnector.api.service.ExchangeService;
 import com.entiros.starlify.muleconnector.api.service.StarlifyExportService;
 import com.entiros.starlify.muleconnector.api.service.StarlifyService;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +21,18 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class StarlifyExportServiceImpl implements StarlifyExportService {
 
-    private final MuleService muleService;
+    private final ExchangeService exchangeService;
     private final StarlifyService starlifyService;
-
+    private final CloudhubService cloudhubService;
 
     private Map<String, Map<String, NetworkSystem>> cachedNetworkSystems = new ConcurrentHashMap<>();
     private Map<String, RequestItem> statusMap = new ConcurrentHashMap<>();
+    private Map<String, CloudhubRequestItem> cloudStatusMap = new ConcurrentHashMap<>();
+
 
     private void processRequest(Request request) {
         ((RequestItem) request).setStatus(RequestItem.Status.IN_PROCESS);
-        UserProfile userProfile = muleService.getProfile(request.getApiKey());
+        UserProfile userProfile = exchangeService.getProfile(request.getApiKey());
         List<Asset> assetList = userProfile.getAssetList();
 
         List<NetworkSystem> systems = starlifyService.getSystems(request);
@@ -60,6 +63,13 @@ public class StarlifyExportServiceImpl implements StarlifyExportService {
         }
     }
 
+    private CloudhubRequest processCloudRequest(CloudhubRequest request) {
+        ((CloudhubRequestItem) request).setStatus(CloudhubRequestItem.Status.IN_PROCESS);
+        Account account = cloudhubService.getAccount(request.getApiKey());
+        String a = cloudhubService.getApplications(request.getApiKey(),account.getOrganization().getCsId(), request.getEnvironment());
+        return request;
+    }
+
 
 
 
@@ -78,7 +88,20 @@ public class StarlifyExportServiceImpl implements StarlifyExportService {
         return workItem;
     }
 
+    @Override
+    public CloudhubRequest submitCloudRequest(CloudhubRequest cloudhubRequest){
+        CloudhubRequestItem workItem = new CloudhubRequestItem();
+        workItem.setStatus(CloudhubRequestItem.Status.NOT_STARTED);
+        workItem.setStarlifyKey(cloudhubRequest.getStarlifyKey());
+        workItem.setApiKey(cloudhubRequest.getApiKey());
+        workItem.setNetworkId(cloudhubRequest.getNetworkId());
+        workItem.setEnvironment(cloudhubRequest.getEnvironment());
+        cloudStatusMap.put(cloudhubRequest.getNetworkId(), workItem);
+        //CompletableFuture.runAsync(() -> {
 
+        //});
+        return processCloudRequest(workItem);
+    }
 
     @Override
     public RequestItem status(Request request) {
