@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Reference extends BaseDto {
-    private NetworkSystem consumingNetworkSystem;
-    private Service service;
+  private NetworkSystem consumingNetworkSystem;
+  private Service service;
 }

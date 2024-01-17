@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class Network {
-    private String id;
+  private String id;
 }

@@ -2,11 +2,10 @@ package com.entiros.starlify.muleconnector.api.controller;
 
 import com.entiros.starlify.muleconnector.api.dto.*;
 import com.entiros.starlify.muleconnector.api.service.StarlifyExportService;
+import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RestController
@@ -14,17 +13,17 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class MuleController {
 
-    private final StarlifyExportService starlifyExportService;
+  private final StarlifyExportService starlifyExportService;
 
-    @PostMapping("/status")
-    public RequestItem getStatus(@RequestBody Request request) {
-        return starlifyExportService.status(request);
-    }
+  @PostMapping("/status")
+  public RequestItem getStatus(@RequestBody Request request) {
+    return starlifyExportService.status(request);
+  }
 
-    @PostMapping("/submitRequest")
-    public RequestItem processRequest(@RequestBody Request request) throws ExecutionException, InterruptedException {
-        log.info("mule key recieved {}", request.getApiKey());
-        return starlifyExportService.submitRequest(request);
-    }
+  @PostMapping("/submitRequest")
+  public RequestItem processRequest(@RequestBody Request request)
+      throws ExecutionException, InterruptedException {
+    log.info("mule key recieved {}", request.getApiKey());
+    return starlifyExportService.submitRequest(request);
+  }
 }
-

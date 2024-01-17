@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class RequestItem extends Request {
-    private Status status;
-    private String errorMessage;
+  private Status status;
+  private String errorMessage;
 
-    public enum Status {
-        NOT_STARTED,
-        IN_PROCESS,
-        DONE,
-        ERROR
-    }
+  public enum Status {
+    NOT_STARTED,
+    IN_PROCESS,
+    DONE,
+    ERROR
+  }
 }

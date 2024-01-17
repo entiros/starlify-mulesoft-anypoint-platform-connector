@@ -1,4 +1,5 @@
 package com.entiros.starlify.muleconnector.api.dto;
-public class ApiCatalog{
-    public boolean enabled;
+
+public class ApiCatalog {
+  public boolean enabled;
 }

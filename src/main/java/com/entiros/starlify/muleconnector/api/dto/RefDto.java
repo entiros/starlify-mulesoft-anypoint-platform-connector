@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RefDto {
-    private String id;
-    private String name;
-    private ServiceDto service;
+  private String id;
+  private String name;
+  private ServiceDto service;
 }
