@@ -17,10 +17,10 @@ Put the text below in your property file to configure your URL for Mulesoft Anyp
 
 ```
 mulesoft:
-	server:
-    		url: https://anypoint.mulesoft.com
+    server:
+        url: https://anypoint.mulesoft.com
 starlify:
-  	url: https://api.starlify.com
+    url: https://api.starlify.com
 ```
 
 Go to cloned location and run the command below to start the process:

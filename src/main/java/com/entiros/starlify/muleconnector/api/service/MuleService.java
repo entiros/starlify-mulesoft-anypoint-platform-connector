@@ -6,13 +6,13 @@ import com.entiros.starlify.muleconnector.api.dto.UserProfile;
 import java.util.List;
 
 public interface MuleService {
-  public UserProfile getProfile(String accessToken);
+  UserProfile getProfile(String accessToken);
 
-  public List<Asset> getAssets(String accessToken, String orgId);
+  List<Asset> getAssets(String accessToken, String orgId);
 
-  public AssetDetails getAssetDetais(
+  AssetDetails getAssetDetais(
       String accessToken, String groupId, String assetId, String version);
 
-  public String getRaml(
+  String getRaml(
       String accessToken, String versionGroup, String groupId, String assetId, String version);
 }

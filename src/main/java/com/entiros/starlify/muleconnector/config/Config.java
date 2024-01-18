@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class Config {
 
-  private String keyStoreType = KeyStore.getDefaultType();
+  private final String keyStoreType = KeyStore.getDefaultType();
 
   @Bean
   @Primary

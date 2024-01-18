@@ -34,32 +34,28 @@ public class StarlifyServiceImpl implements StarlifyService {
   public List<NetworkSystem> getSystems(Request request) {
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-API-KEY", request.getStarlifyKey());
-    List<NetworkSystem> body =
-        restTemplate
-            .exchange(
-                starlifyServer + "/hypermedia/networks/{networkId}/systems?paged=false",
-                HttpMethod.GET,
-                new HttpEntity<>(null, headers),
-                new ParameterizedTypeReference<List<NetworkSystem>>() {},
-                request.getNetworkId())
-            .getBody();
-    return body;
+    return restTemplate
+        .exchange(
+            starlifyServer + "/hypermedia/networks/{networkId}/systems?paged=false",
+            HttpMethod.GET,
+            new HttpEntity<>(null, headers),
+            new ParameterizedTypeReference<List<NetworkSystem>>() {},
+            request.getNetworkId())
+        .getBody();
   }
 
   @Override
   public SystemRespDto addSystem(Request request, SystemDto systemDto) {
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-API-KEY", request.getStarlifyKey());
-    SystemRespDto body =
-        restTemplate
-            .exchange(
-                starlifyServer + "/hypermedia/networks/{networkId}/systems",
-                HttpMethod.POST,
-                new HttpEntity<>(systemDto, headers),
-                new ParameterizedTypeReference<SystemRespDto>() {},
-                request.getNetworkId())
-            .getBody();
-    return body;
+    return restTemplate
+        .exchange(
+            starlifyServer + "/hypermedia/networks/{networkId}/systems",
+            HttpMethod.POST,
+            new HttpEntity<>(systemDto, headers),
+            new ParameterizedTypeReference<SystemRespDto>() {},
+            request.getNetworkId())
+        .getBody();
   }
 
   @Override
@@ -103,10 +99,7 @@ public class StarlifyServiceImpl implements StarlifyService {
             asset.getGroupId(),
             asset.getAssetId(),
             asset.getVersion());
-    InputStream is = new ByteArrayInputStream(c.getBytes());
-    LinkedMultiValueMap<String, Object> vm = new LinkedMultiValueMap<>();
     String fileName = asset.getAssetId() + ".raml";
-    //        vm.add(fileName, new MultipartInputStreamFileResource(is, fileName));
     MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
     ContentDisposition contentDisposition =
         ContentDisposition.builder("form-data").name("file").filename(fileName).build();
@@ -120,17 +113,14 @@ public class StarlifyServiceImpl implements StarlifyService {
     headers.setContentType(MediaType.MULTIPART_FORM_DATA);
     headers.add("X-API-KEY", request.getStarlifyKey());
 
-    String b =
-        restTemplate
-            .exchange(
-                starlifyServer + "/hypermedia/systems/{systemId}/services",
-                HttpMethod.PUT,
-                new HttpEntity<>(body, headers),
-                new ParameterizedTypeReference<String>() {},
-                systemId)
-            .getBody();
-    //        addRef(request, systemId);
-    return b;
+    return restTemplate
+        .exchange(
+            starlifyServer + "/hypermedia/systems/{systemId}/services",
+            HttpMethod.PUT,
+            new HttpEntity<>(body, headers),
+            new ParameterizedTypeReference<String>() {},
+            systemId)
+        .getBody();
   }
 
   private void addRef(Request request, String systemId) {
@@ -164,26 +154,6 @@ public class StarlifyServiceImpl implements StarlifyService {
                   systemId)
               .getBody();
       System.out.println(body1);
-    }
-  }
-
-  class MultipartInputStreamFileResource extends InputStreamResource {
-
-    private final String filename;
-
-    MultipartInputStreamFileResource(InputStream inputStream, String filename) {
-      super(inputStream);
-      this.filename = filename;
-    }
-
-    @Override
-    public String getFilename() {
-      return this.filename;
-    }
-
-    @Override
-    public long contentLength() throws IOException {
-      return -1;
     }
   }
 }

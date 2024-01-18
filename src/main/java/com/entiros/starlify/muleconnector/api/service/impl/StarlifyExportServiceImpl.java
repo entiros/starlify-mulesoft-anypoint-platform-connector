@@ -22,8 +22,8 @@ public class StarlifyExportServiceImpl implements StarlifyExportService {
   private final MuleService muleService;
   private final StarlifyService starlifyService;
 
-  private Map<String, Map<String, NetworkSystem>> cachedNetworkSystems = new ConcurrentHashMap<>();
-  private Map<String, RequestItem> statusMap = new ConcurrentHashMap<>();
+  private final Map<String, Map<String, NetworkSystem>> cachedNetworkSystems = new ConcurrentHashMap<>();
+  private final Map<String, RequestItem> statusMap = new ConcurrentHashMap<>();
 
   private void processRequest(Request request) {
     ((RequestItem) request).setStatus(RequestItem.Status.IN_PROCESS);
@@ -60,8 +60,7 @@ public class StarlifyExportServiceImpl implements StarlifyExportService {
   }
 
   @Override
-  public RequestItem submitRequest(Request request)
-      throws ExecutionException, InterruptedException {
+  public RequestItem submitRequest(Request request) {
     RequestItem workItem = new RequestItem();
     workItem.setStatus(RequestItem.Status.NOT_STARTED);
     workItem.setStarlifyKey(request.getStarlifyKey());
@@ -94,11 +93,8 @@ public class StarlifyExportServiceImpl implements StarlifyExportService {
 
   private synchronized void populateSystems(Request request, List<NetworkSystem> networkSystems) {
     if (networkSystems != null && !networkSystems.isEmpty()) {
-      Map<String, NetworkSystem> existingSystems = cachedNetworkSystems.get(request.getNetworkId());
-      if (existingSystems == null) {
-        existingSystems = new ConcurrentHashMap<>();
-        cachedNetworkSystems.put(request.getNetworkId(), existingSystems);
-      }
+      Map<String, NetworkSystem> existingSystems = cachedNetworkSystems.computeIfAbsent(request.getNetworkId(),
+          k -> new ConcurrentHashMap<>());
       for (NetworkSystem ns : networkSystems) {
         existingSystems.put(ns.getName(), ns);
       }
