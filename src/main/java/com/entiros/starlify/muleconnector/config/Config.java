@@ -18,8 +18,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class Config {
 
-  private final String keyStoreType = KeyStore.getDefaultType();
-
   @Bean
   @Primary
   public static ObjectMapper getObjectMapper() {

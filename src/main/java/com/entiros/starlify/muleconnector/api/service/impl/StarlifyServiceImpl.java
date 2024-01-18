@@ -27,9 +27,6 @@ public class StarlifyServiceImpl implements StarlifyService {
   @Value("${starlify.url}")
   private String starlifyServer;
 
-  @Value("${mulesoft.server.url}")
-  private String apiServer;
-
   @Override
   public List<NetworkSystem> getSystems(Request request) {
     HttpHeaders headers = new HttpHeaders();
@@ -62,32 +59,29 @@ public class StarlifyServiceImpl implements StarlifyService {
   public String addService(Request request, ServiceDto serviceDto, String systemId) {
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-API-KEY", request.getStarlifyKey());
-    String body =
-        restTemplate
-            .exchange(
-                starlifyServer + "/hypermedia/systems/{systemId}/services",
-                HttpMethod.POST,
-                new HttpEntity<>(serviceDto, headers),
-                new ParameterizedTypeReference<String>() {},
-                systemId)
-            .getBody();
-    return body;
+    return restTemplate
+        .exchange(
+            starlifyServer + "/hypermedia/systems/{systemId}/services",
+            HttpMethod.POST,
+            new HttpEntity<>(serviceDto, headers),
+            new ParameterizedTypeReference<String>() {},
+            systemId)
+        .getBody();
   }
 
   @Override
   public Response<ServiceRespDto> getServices(Request request, String systemId) {
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-API-KEY", request.getStarlifyKey());
-    Response<ServiceRespDto> body =
-        restTemplate
-            .exchange(
-                starlifyServer + "/hypermedia/systems/{systemId}/services",
-                HttpMethod.GET,
-                new HttpEntity<>(null, headers),
-                new ParameterizedTypeReference<Response<ServiceRespDto>>() {},
-                systemId)
-            .getBody();
-    return body;
+
+    return restTemplate
+        .exchange(
+            starlifyServer + "/hypermedia/systems/{systemId}/services",
+            HttpMethod.GET,
+            new HttpEntity<>(null, headers),
+            new ParameterizedTypeReference<Response<ServiceRespDto>>() {},
+            systemId)
+        .getBody();
   }
 
   @Override

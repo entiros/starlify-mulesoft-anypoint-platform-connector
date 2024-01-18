@@ -40,7 +40,7 @@ public class StarlifyExportServiceImpl implements StarlifyExportService {
         log.info("Started asset:" + a.getName() + " id:" + a.getAssetId());
         NetworkSystem networkSystem =
             existingSystems != null ? existingSystems.get(a.getName()) : null;
-        String systemId = null;
+        String systemId;
         if (networkSystem == null) {
           SystemDto systemDto = this.createSystemDto(request, a.getName(), a.getDescription());
           SystemRespDto systemRespDto = starlifyService.addSystem(request, systemDto);

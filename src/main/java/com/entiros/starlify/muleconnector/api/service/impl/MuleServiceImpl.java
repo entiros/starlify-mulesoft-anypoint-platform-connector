@@ -33,7 +33,7 @@ public class MuleServiceImpl implements MuleService {
             apiServer + "/accounts/api/me",
             HttpMethod.GET,
             new HttpEntity<>(null, headers),
-            new ParameterizedTypeReference<UserProfile>() {});
+            new ParameterizedTypeReference<>() {});
     UserProfile userProfile = response.getBody();
     userProfile.setAssetList(getAssets(accessToken, userProfile.getUser().organizationId));
     for (Asset asset : userProfile.getAssetList()) {
@@ -52,7 +52,7 @@ public class MuleServiceImpl implements MuleService {
             apiServer + "/exchange/api/v2/assets/search?masterOrganizationId={orgId}",
             HttpMethod.GET,
             new HttpEntity<>(null, headers),
-            new ParameterizedTypeReference<List<Asset>>() {},
+            new ParameterizedTypeReference<>() {},
             orgId);
     return response.getBody();
   }
@@ -67,7 +67,7 @@ public class MuleServiceImpl implements MuleService {
             apiServer + "/exchange/api/v2/assets/{groupId}/{assetId}/{version}/asset",
             HttpMethod.GET,
             new HttpEntity<>(null, headers),
-            new ParameterizedTypeReference<AssetDetails>() {},
+            new ParameterizedTypeReference<>() {},
             groupId,
             assetId,
             version);
@@ -85,7 +85,7 @@ public class MuleServiceImpl implements MuleService {
                 + "/exchange/api/{versionGroup}/assets/{groupId}/{assetId}/{version}/api/root",
             HttpMethod.GET,
             new HttpEntity<>(null, headers),
-            new ParameterizedTypeReference<String>() {},
+            new ParameterizedTypeReference<>() {},
             versionGroup,
             groupId,
             assetId,

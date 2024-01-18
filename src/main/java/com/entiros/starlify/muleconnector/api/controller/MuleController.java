@@ -23,7 +23,7 @@ public class MuleController {
   @PostMapping("/submitRequest")
   public RequestItem processRequest(@RequestBody Request request)
       throws ExecutionException, InterruptedException {
-    log.info("mule key recieved {}", request.getApiKey());
+    log.info("mule key received {}", request.getApiKey());
     return starlifyExportService.submitRequest(request);
   }
 }
